@@ -4,8 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
-    <% load staticfiles %>
-    <title>{% block title %} Andrew Liu Blog {% endblock %}</title>
+    <title>{% block title %} SHNU e-Bulltin by PHOENIX {% endblock %}</title>
     <link rel="stylesheet" href="http://labfile.oss.aliyuncs.com/courses/487/pure-min.css">
     <link rel="stylesheet" href="http://labfile.oss.aliyuncs.com/courses/487/grids-responsive-min.css">
     <link rel="stylesheet" href="http://labfile.oss.aliyuncs.com/courses/487/blog.css">
@@ -37,6 +36,30 @@
 
     <div class="content pure-u-1 pure-u-md-3-4">
         <div>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">NOTICE</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="">
+                            <a href="{% url 'article:create_notice' %}">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create Notice
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="#">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             {% block content %}
             {% endblock %}
             <div class="footer">

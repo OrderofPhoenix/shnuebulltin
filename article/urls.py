@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^archives/$', views.archives, name='archives'),
     url(r'^aboutus/$', views.about_us, name='about_us'),
     url(r'^tag(?P<tag>\w+)/$', views.search_tag, name='search_tag'),
-
+    url(r'^create_notice/$', views.create_notice, name='create_notice')
 ]
