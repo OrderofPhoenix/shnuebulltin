@@ -5,7 +5,8 @@
 <div class="posts">
         <section class="post">
             <header class="post-header">
-                <h2 class="post-title">{{ post.title }}</h2>
+                <h2 class="post-title">{{ post.title }}  <a class="btn btn-default" href="{% url 'article:edit_post' id=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-default" href="{% url 'article:del_post' id=post.pk  %}"><span class="glyphicon glyphicon-remove"></span></a></h2>
 
                     <p class="post-meta">
                         Time:  <a class="post-author" href="#">{{ post.date_time|date:"Y /m /d"}}</a> <a class="post-category post-category-js" href="{% url 'article:search_tag' tag=post.category %}">{{ post.category }}</a>
@@ -19,6 +20,12 @@
                 </div>
         </section>
 </div><!-- /.blog-post -->
+<br>
+<br>
+<br>
+<br>
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+<br>
 <div class="comment">
     <h3>Leave your comments</h3>
     <div class="comment-main">

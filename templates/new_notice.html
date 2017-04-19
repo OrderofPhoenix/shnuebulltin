@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3>CREATE A NEW NOTICE</h3>
+    <form method="POST" class="notice-form">{% csrf_token %}
+        {{  form.as_p }}
+        <button type="submit" class="save btn btn-default">Create</button>
+    </form>
+{% endblock %}

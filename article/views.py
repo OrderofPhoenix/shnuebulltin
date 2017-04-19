@@ -5,7 +5,7 @@ from datetime import datetime
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ArticleForm, CommentForm
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 
 # Create your views here.
 
@@ -69,9 +69,9 @@ def create_notice(request):
             return redirect('/article')
     else:
         form = ArticleForm()
-    return render(request, 'editor.html', {'form' : form})
+    return render(request, 'new_notice.html', {'form' : form})
 
-def post_comment(request, article_id):
+def post_comment(request, article_id):#unavaliable
     if request.method.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -83,4 +83,20 @@ def post_comment(request, article_id):
         form = CommentForm()
         return render(request, 'post.html', {'form' : form})
 
+def edit_post(request, id):
+    post = get_object_or_404(Article, pk=id)
+    if request.method == "POST":
+        form = ArticleForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('/article/' + id, pk=post.pk)
+    else:
+        form = ArticleForm(instance=post)
+    return render(request, 'post_edit.html', {'form': form})
 
+def del_post(request, id):
+    post = get_object_or_404(Article, pk=id)
+    post.delete()
+    return redirect('/article')
