@@ -15,3 +15,15 @@ class Article(models.Model):
     class Meta:
         ordering = ['-date_time']
 
+class Comment(models.Model):
+    user_name = models.CharField(max_length=100)
+    content = models.TextField('')
+    date_time = models.DateTimeField(auto_now_add=True)
+    article = models.ForeignKey('Article', on_delete=models.CASCADE)
+
+
+    def __unicode__(self):
+        return self.content[:20]
+
+    class Meta:
+        ordering = ['-date_time']

@@ -1,0 +1,29 @@
+<div class="comment">
+    <div class="comment-main">
+        <p class="head">Comments</p>
+        <form method="post" action="{% url 'article:comment' article.pk %}">
+            {% csrf_token %}
+            <div class="row">
+                {% for field in form %}
+                    {{ field }}
+                    {{ field.errors }}
+                    <br>
+                {% endfor %}
+            </div>
+            <button type="submit" class="com-button">Post</button>
+        </form>
+        <p class="comment-count">{{ 0 }}Comments</p>
+        <hr>
+        {% for comment in comment_list %}
+            <div class="main-content">
+                <span class="user-nickname">{{ comment.user_name }}</span>
+                <time class="time">{{ comment.date_time }}</time>
+                <div class="comment-content">
+                    {{ comment.content }}
+                </div>
+                  <a href="">Reply</a>#}
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+</div>

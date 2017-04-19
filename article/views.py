@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Article
+from .models import Article, Comment
 from datetime import datetime
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import ArticleForm
+from .forms import ArticleForm, CommentForm
 from django.shortcuts import redirect
 
 # Create your views here.
@@ -24,9 +24,20 @@ def home(request):
 def detail(request, id):
     try:
         post = Article.objects.get(id=str(id))
+        comment_list = Comment.objects.filter(article=post)
     except Article.DoesNotExist:
         raise Http404
-    return render(request, 'post.html', {'post' : post})
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article = post
+            comment.user_name = request.user
+            comment.save()
+            return redirect('/article/' + str(id))
+    else:
+        form = CommentForm()
+    return render(request, 'post.html', {'post' : post, 'comment_list' : comment_list, 'form' : form})
 
 def test(request):
     return render(request, 'test.html', {'current_time': datetime.now()})
@@ -59,3 +70,17 @@ def create_notice(request):
     else:
         form = ArticleForm()
     return render(request, 'editor.html', {'form' : form})
+
+def post_comment(request, article_id):
+    if request.method.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user_name = request.user
+            comment.save()
+            return redirect('/article')
+    else:
+        form = CommentForm()
+        return render(request, 'post.html', {'form' : form})
+
+
